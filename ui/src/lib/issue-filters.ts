@@ -38,14 +38,27 @@ export const issueStatusOrder = ["in_progress", "todo", "backlog", "in_review", 
 export const issuePriorityOrder = ["critical", "high", "medium", "low"];
 
 export const issueQuickFilterPresets = [
-  { label: "All", statuses: [] as string[] },
-  { label: "Active", statuses: ["todo", "in_progress", "in_review", "blocked"] },
-  { label: "Backlog", statuses: ["backlog"] },
-  { label: "Done", statuses: ["done", "cancelled"] },
+  { label: "全部", statuses: [] as string[] },
+  { label: "活跃", statuses: ["todo", "in_progress", "in_review", "blocked"] },
+  { label: "待规划", statuses: ["backlog"] },
+  { label: "已完成", statuses: ["done", "cancelled"] },
 ];
 
 export function issueFilterLabel(value: string): string {
-  return value.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+  const labels: Record<string, string> = {
+    backlog: "待规划",
+    todo: "待办",
+    in_progress: "进行中",
+    in_review: "评审中",
+    done: "已完成",
+    blocked: "阻塞",
+    cancelled: "已取消",
+    critical: "紧急",
+    high: "高",
+    medium: "中",
+    low: "低",
+  };
+  return labels[value] ?? value.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 export function issueFilterArraysEqual(a: string[], b: string[]): boolean {

@@ -117,11 +117,11 @@ function MockAgentBubble({ agentName, body }: { agentName: string; body: string 
 }
 
 const checklist = [
-  "One container per system notice — no nested chat bubble",
-  "Tone communicated by icon + label, never color alone",
-  "Operational evidence hidden behind Details, expanded only on demand",
-  "Issue, agent, and run metadata render as typed link rows, not raw markdown",
-  "Hierarchy visibly distinct from user (right-aligned) and agent (left-aligned) bubbles",
+  "每条系统通知仅一个容器，不再嵌套聊天气泡",
+  "语气通过图标 + 标签表达，不能只依赖颜色",
+  "运行证据默认折叠在详情中，仅按需展开",
+  "任务、智能体与运行元数据应以类型化链接行展示，而非原始 markdown",
+  "层级上与用户（右对齐）和智能体（左对齐）气泡明显区分",
 ];
 
 export function SystemNoticeUxLab() {
@@ -142,15 +142,14 @@ export function SystemNoticeUxLab() {
           <div className="p-6 sm:p-7">
             <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/25 bg-amber-500/[0.08] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-amber-700 dark:text-amber-300">
               <FlaskConical className="h-3.5 w-3.5" />
-              System Notice Lab
+              系统通知实验室
             </div>
             <h1 className="mt-4 text-3xl font-semibold tracking-tight">
-              First-class system notice treatment
+              一等系统通知样式
             </h1>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
-              Replaces the current pattern where a Paperclip-authored warning renders inside a user-style
-              chat bubble. The notice is one container, system-styled, with hidden-by-default operational
-              metadata. Tone is conveyed by icon, label, and color together so it stays accessible.
+              用于替换当前“Paperclip 警告渲染在用户气泡内”的模式。通知采用单容器系统样式，
+              运行元数据默认隐藏。语气由图标、标签和颜色共同表达，以保证可访问性。
             </p>
 
             <div className="mt-5 flex flex-wrap items-center gap-2">
@@ -169,7 +168,7 @@ export function SystemNoticeUxLab() {
           <aside className="border-t border-border/60 bg-background/70 p-6 lg:border-l lg:border-t-0">
             <div className="mb-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <ListChecks className="h-4 w-4 text-amber-700 dark:text-amber-300" />
-              What this lab proves
+              本实验室验证点
             </div>
             <div className="space-y-3">
               {checklist.map((line) => (
@@ -187,9 +186,9 @@ export function SystemNoticeUxLab() {
 
       <LabSection
         id="tones"
-        eyebrow="Tone matrix"
-        title="Three tones, two states"
-        description="Each tone pairs a unique icon and tone label so the notice is recognizable without color. Collapsed is the default; the Details affordance reveals operational metadata only when reviewers ask for it."
+        eyebrow="语气矩阵"
+        title="三种语气、两种状态"
+        description="每种语气都配有独立图标与标签，不依赖颜色也可识别。默认折叠，仅在需要时通过“详情”展开运行元数据。"
         accentClassName="bg-[linear-gradient(180deg,rgba(245,158,11,0.05),transparent_28%),var(--background)]"
       >
         <div className="space-y-5">
@@ -219,52 +218,52 @@ export function SystemNoticeUxLab() {
 
       <LabSection
         id="hierarchy"
-        eyebrow="Hierarchy in thread"
-        title="Distinct from user and agent comments"
-        description="Side-by-side with adjacent comment types so reviewers can confirm the system row reads as a system row — full width, no avatar gutter, no chat bubble — while user and agent comments keep their existing rounded bubbles."
+        eyebrow="线程层级"
+        title="与用户和智能体评论区分"
+        description="与相邻评论并排展示，便于确认系统行确实呈现为系统行：全宽、无头像槽、无聊天气泡；同时保留用户与智能体现有圆角气泡。"
         accentClassName="bg-[linear-gradient(180deg,rgba(8,145,178,0.05),transparent_28%),var(--background)]"
       >
         <div className="space-y-4 rounded-2xl border border-border/70 bg-background/70 p-4">
           <MockUserBubble
             authorName="Riley Board"
-            body="Why does this issue keep waking back up without a clear next step?"
+            body="这个任务为什么总在没有明确下一步时反复被唤醒？"
             alignEnd
           />
           <MockAgentBubble
             agentName="CodexCoder"
-            body="The previous run completed without picking a disposition. I'll wait for the new system notice to surface so the recovery owner is unambiguous."
+            body="上一次运行结束时没有给出处置结论。我会等待新的系统通知出现，以便恢复负责人明确无歧义。"
           />
           <SystemNotice
             tone="danger"
-            label="System alert"
+            label="系统告警"
             source={{ label: "Paperclip", href: "/PAP/agents" }}
             timestamp="2026-05-04T16:48:00.000Z"
-            body="Paperclip could not resolve this issue's missing disposition automatically. The issue is blocked on a recovery owner."
+            body="Paperclip 无法自动处理该任务缺失处置结论的问题。任务当前阻塞于恢复负责人确认。"
             metadata={[
               {
-                title: "Recovery owner",
+                title: "恢复负责人",
                 rows: [
                   {
                     kind: "issue",
-                    label: "Recovery issue",
+                    label: "恢复任务",
                     identifier: "PAP-3440",
                     href: "/PAP/issues/PAP-3440",
-                    title: "Successful run handoff missing disposition",
+                    title: "成功运行移交缺少处置结论",
                   },
                   {
                     kind: "agent",
-                    label: "Owner",
+                    label: "负责人",
                     name: "CTO",
                     href: "/PAP/agents/cto",
                   },
                 ],
               },
               {
-                title: "Run evidence",
+                title: "运行证据",
                 rows: [
                   {
                     kind: "run",
-                    label: "Source run",
+                    label: "源运行",
                     runId: "9cdba892-c7ca-4d93-8604-4843873b127c",
                     href: "/PAP/agents/codexcoder/runs/9cdba892-c7ca-4d93-8604-4843873b127c",
                     status: "succeeded",
@@ -275,7 +274,7 @@ export function SystemNoticeUxLab() {
           />
           <MockUserBubble
             authorName="Riley Board"
-            body="Thanks — assigning the recovery owner now."
+            body="收到，我现在去指派恢复负责人。"
             alignEnd
           />
         </div>

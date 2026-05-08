@@ -22,69 +22,69 @@ import {
 const inviteRoleOptions = [
   {
     value: "viewer",
-    label: "Viewer",
-    description: "Can view company work and follow along without operational permissions.",
-    gets: "No built-in grants.",
+    label: "查看者",
+    description: "可查看公司工作并跟进进展，但无运营权限。",
+    gets: "无内置授权。",
   },
   {
     value: "operator",
-    label: "Operator",
-    description: "Recommended for people who need to help run work without managing access.",
-    gets: "Can assign tasks.",
+    label: "运营者",
+    description: "适用于需要协助推进工作但不负责权限管理的成员。",
+    gets: "可分配任务。",
   },
   {
     value: "admin",
-    label: "Admin",
-    description: "Recommended for operators who need to invite people, create agents, and approve joins.",
-    gets: "Can create agents, invite users, assign tasks, and approve join requests.",
+    label: "管理员",
+    description: "适用于需要邀请成员、创建智能体并审批加入请求的运营人员。",
+    gets: "可创建智能体、邀请用户、分配任务并审批加入请求。",
   },
   {
     value: "owner",
-    label: "Owner",
-    description: "Full company access, including membership and permission management.",
-    gets: "Everything in Admin, plus managing members and permission grants.",
+    label: "所有者",
+    description: "拥有公司完整访问权限，包括成员与权限管理。",
+    gets: "包含管理员全部权限，另可管理成员与授权。",
   },
 ] as const;
 
 const inviteHistory = [
   {
     id: "invite-active",
-    state: "Active",
+    state: "生效中",
     humanRole: "operator",
     invitedBy: "Board User 25",
     email: "board25@paperclip.local",
-    createdAt: "Apr 25, 2026, 9:00 AM",
-    action: "Revoke",
-    relatedLabel: "Review request",
+    createdAt: "2026 年 4 月 25 日 09:00",
+    action: "撤销",
+    relatedLabel: "审核请求",
   },
   {
     id: "invite-accepted",
-    state: "Accepted",
+    state: "已接受",
     humanRole: "viewer",
     invitedBy: "Board User 24",
     email: "board24@paperclip.local",
-    createdAt: "Apr 24, 2026, 8:15 AM",
-    action: "Inactive",
+    createdAt: "2026 年 4 月 24 日 08:15",
+    action: "不可用",
     relatedLabel: "—",
   },
   {
     id: "invite-revoked",
-    state: "Revoked",
+    state: "已撤销",
     humanRole: "admin",
     invitedBy: "Board User 20",
     email: "board20@paperclip.local",
-    createdAt: "Apr 20, 2026, 2:45 PM",
-    action: "Inactive",
+    createdAt: "2026 年 4 月 20 日 14:45",
+    action: "不可用",
     relatedLabel: "—",
   },
   {
     id: "invite-expired",
-    state: "Expired",
+    state: "已过期",
     humanRole: "owner",
     invitedBy: "Board User 19",
     email: "board19@paperclip.local",
-    createdAt: "Apr 19, 2026, 7:10 PM",
-    action: "Inactive",
+    createdAt: "2026 年 4 月 19 日 19:10",
+    action: "不可用",
     relatedLabel: "—",
   },
 ] as const;
@@ -200,29 +200,29 @@ function InviteSummaryPanel({
           className="h-16 w-16 rounded-none border border-zinc-800"
         />
         <div className="min-w-0">
-          <p className="text-xs uppercase tracking-[0.24em] text-zinc-500">You&apos;ve been invited to join Paperclip</p>
+          <p className="text-xs uppercase tracking-[0.24em] text-zinc-500">你已获邀加入 Paperclip</p>
           <h3 className="mt-2 text-2xl font-semibold text-zinc-100">{title}</h3>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-300">{description}</p>
         </div>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <MetaCard label="Company" value="Acme Robotics" />
-        <MetaCard label="Invited by" value="Board User" />
-        <MetaCard label="Requested access" value={requestedAccess} />
-        <MetaCard label="Invite expires" value="Mar 7, 2027" />
+        <MetaCard label="公司" value="Acme Robotics" />
+        <MetaCard label="邀请人" value="Board User" />
+        <MetaCard label="申请权限" value={requestedAccess} />
+        <MetaCard label="邀请过期时间" value="2027 年 3 月 7 日" />
       </div>
 
       {inviteMessage ? (
         <div className="border border-amber-500/40 bg-amber-500/10 p-4">
-          <div className="text-xs uppercase tracking-[0.2em] text-amber-200/80">Message from inviter</div>
+          <div className="text-xs uppercase tracking-[0.2em] text-amber-200/80">邀请人留言</div>
           <p className="mt-2 text-sm leading-6 text-amber-50">{inviteMessage}</p>
         </div>
       ) : null}
 
       {signedInLabel ? (
         <div className="border border-emerald-500/40 bg-emerald-500/10 p-4 text-sm text-emerald-50">
-          Signed in as <span className="font-medium">{signedInLabel}</span>.
+          当前登录为 <span className="font-medium">{signedInLabel}</span>。
         </div>
       ) : null}
     </>

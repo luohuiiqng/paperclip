@@ -31,12 +31,12 @@ const SEARCH_DEBOUNCE_MS = 250;
 const IDENTIFIER_PATTERN = /^[A-Z]+-\d+$/;
 
 const SCOPE_LABELS: Record<CompanySearchScope, string> = {
-  all: "All",
-  issues: "Issues",
-  comments: "Comments",
-  documents: "Documents",
-  agents: "Agents",
-  projects: "Projects",
+  all: "全部",
+  issues: "任务",
+  comments: "评论",
+  documents: "文档",
+  agents: "智能体",
+  projects: "项目",
 };
 
 type SubGroupKey = "issues" | "comments" | "documents" | "agents" | "projects";
@@ -44,11 +44,11 @@ type SubGroupKey = "issues" | "comments" | "documents" | "agents" | "projects";
 const SUBGROUP_ORDER: SubGroupKey[] = ["issues", "comments", "documents", "agents", "projects"];
 
 const SUBGROUP_LABELS: Record<SubGroupKey, string> = {
-  issues: "Issues",
-  comments: "Comments",
-  documents: "Documents",
-  agents: "Agents",
-  projects: "Projects",
+  issues: "任务",
+  comments: "评论",
+  documents: "文档",
+  agents: "智能体",
+  projects: "项目",
 };
 
 function classifyResult(result: CompanySearchResult): SubGroupKey {
@@ -80,7 +80,7 @@ function isCompanySearchScope(value: string | null): value is CompanySearchScope
 }
 
 function describeScope(scope: CompanySearchScope) {
-  if (scope === "all") return "All scopes";
+  if (scope === "all") return "全部范围";
   return SCOPE_LABELS[scope];
 }
 
@@ -100,7 +100,7 @@ export function buildSearchUrl(href: string, query: string, scope: CompanySearch
 }
 
 function shapeError(error: unknown): { message: string; status?: number } {
-  if (!error) return { message: "Unknown error" };
+  if (!error) return { message: "未知错误" };
   if (error instanceof Error) {
     const status = (error as Error & { status?: number }).status;
     return { message: error.message, status: typeof status === "number" ? status : undefined };
@@ -128,7 +128,7 @@ export function Search() {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Search" }]);
+    setBreadcrumbs([{ label: "搜索" }]);
   }, [setBreadcrumbs]);
 
   useEffect(() => {
@@ -324,7 +324,7 @@ export function Search() {
   return (
     <div className="flex h-full min-h-0 flex-col" data-page="search">
       <div className="border-b border-border px-4 py-3 sm:px-6">
-        <h1 className="sr-only">Search</h1>
+        <h1 className="sr-only">搜索</h1>
         <div className="relative">
           <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -342,15 +342,15 @@ export function Search() {
                 }
               }
             }}
-            placeholder="Search issues, comments, documents, agents, projects…"
-            aria-label="Search query"
+            placeholder="搜索任务、评论、文档、智能体、项目…"
+            aria-label="搜索关键词"
             className="h-10 pl-9 pr-20 text-sm"
           />
           {draftQuery.length > 0 ? (
             <button
               type="button"
               onClick={handleClear}
-              aria-label="Clear search"
+              aria-label="清空搜索"
               className="absolute right-12 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground hover:bg-accent/50"
             >
               <X className="h-3.5 w-3.5" />
@@ -450,15 +450,15 @@ function SearchTabContent({
     return (
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-10 sm:px-6">
         <div>
-          <h2 className="text-lg font-semibold">Type to search company memory.</h2>
+          <h2 className="text-lg font-semibold">输入关键词以搜索公司记忆。</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Issues, comments, plan documents, agents, projects — same surface, ranked by relevance.
+            任务、评论、计划文档、智能体、项目统一检索，并按相关度排序。
           </p>
         </div>
         {recentSearches.length > 0 ? (
           <div>
             <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-              Recent searches
+              最近搜索
             </div>
             <ul className="flex flex-col divide-y divide-border rounded-md border border-border">
               {recentSearches.map((entry) => (
@@ -478,16 +478,14 @@ function SearchTabContent({
         ) : null}
         <ul className="space-y-1 text-xs text-muted-foreground">
           <li>
-            <span className="font-medium text-foreground">Identifier lookup:</span> type{" "}
-            <code className="rounded bg-muted px-1 py-0.5 text-[11px]">PAP-123</code> to jump straight to an issue.
+            <span className="font-medium text-foreground">编号直达：</span>输入{" "}
+            <code className="rounded bg-muted px-1 py-0.5 text-[11px]">PAP-123</code> 可直接跳转到对应任务。
           </li>
           <li>
-            <span className="font-medium text-foreground">Quoted phrases:</span> wrap a phrase in quotes to match the
-            exact sequence.
+            <span className="font-medium text-foreground">短语精确匹配：</span>将词组放入引号可匹配完整连续文本。
           </li>
           <li>
-            <span className="font-medium text-foreground">⌘K:</span> reopens the command palette pre-seeded with your
-            current query.
+            <span className="font-medium text-foreground">⌘K：</span>可重新打开命令面板并自动带入当前查询词。
           </li>
         </ul>
       </div>
@@ -499,17 +497,16 @@ function SearchTabContent({
     return (
       <div className="mx-auto flex w-full max-w-xl flex-col items-center justify-center gap-3 px-4 py-12 text-center">
         <AlertTriangle className="h-10 w-10 text-destructive" aria-hidden />
-        <div className="text-base font-semibold">Couldn’t run that search</div>
+        <div className="text-base font-semibold">搜索执行失败</div>
         <p className="text-sm text-muted-foreground">
-          {status ? `The server returned ${status}.` : "The request failed."} Your input and filters are still here, so
-          you can retry or fall back to the Issues filter.
+          {status ? `服务器返回了 ${status}。` : "请求失败。"} 你的输入和筛选条件仍然保留，可重试或切换到任务筛选视图。
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Button onClick={refetch} variant="default" size="sm">
-            Retry
+            重试
           </Button>
           <Button onClick={navigateIssuesFallback} variant="outline" size="sm">
-            Open Issues filter view
+            打开任务筛选视图
           </Button>
         </div>
       </div>
@@ -520,7 +517,7 @@ function SearchTabContent({
     return (
       <div className="flex flex-col gap-2 px-2 py-3 sm:px-4">
         <div className="px-3 text-xs text-muted-foreground" data-testid="search-loading">
-          Searching for &ldquo;{trimmedQuery}&rdquo;…
+          正在搜索 &ldquo;{trimmedQuery}&rdquo;…
         </div>
         <div className="flex flex-col">
           <div className="px-3 py-2">
@@ -544,31 +541,30 @@ function SearchTabContent({
     return (
       <div className="mx-auto flex w-full max-w-xl flex-col items-center justify-center gap-3 px-4 py-12 text-center">
         <FileQuestion className="h-10 w-10 text-muted-foreground" aria-hidden />
-        <div className="text-base font-semibold">No results for &ldquo;{trimmedQuery}&rdquo;</div>
+        <div className="text-base font-semibold">未找到 &ldquo;{trimmedQuery}&rdquo; 的结果</div>
         <p className="text-sm text-muted-foreground">
-          We couldn’t find a match in {describeScope(scope).toLowerCase()}. Try widening the scope or rephrasing your
-          query.
+          在{describeScope(scope)}中未找到匹配结果。请尝试扩大范围或更换关键词。
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           {scope !== "all" ? (
             <Button onClick={showAllScope} size="sm" variant="outline">
-              Search all scopes
+              搜索全部范围
             </Button>
           ) : null}
           <Button onClick={openNewIssue} size="sm" variant="default">
             <Plus className="mr-1.5 h-4 w-4" />
-            Create issue from this query
+            由该查询创建任务
           </Button>
           <Button onClick={navigateIssuesFallback} size="sm" variant="ghost">
-            Open Issues filter view
+            打开任务筛选视图
           </Button>
         </div>
         <ul className="mt-2 space-y-0.5 text-xs text-muted-foreground">
-          <li>Try fewer tokens or a single distinctive term.</li>
+          <li>尝试减少关键词，或只用一个更有辨识度的词。</li>
           <li>
-            Use an identifier shortcut like <code className="rounded bg-muted px-1 py-0.5">PAP-123</code>.
+            可使用编号捷径，例如 <code className="rounded bg-muted px-1 py-0.5">PAP-123</code>。
           </li>
-          <li>Wrap multi-word phrases in quotes.</li>
+          <li>多词短语可加引号进行精确匹配。</li>
         </ul>
       </div>
     );
@@ -580,9 +576,9 @@ function SearchTabContent({
     <div className="flex w-full max-w-[960px] flex-col px-2 sm:px-4" data-testid="search-results">
       <div className="flex items-center justify-between py-2 text-[11px] uppercase tracking-wide text-muted-foreground">
         <span>
-          {totalResults === 1 ? "1 result" : `${totalResults} results`} · sorted by relevance
+          {totalResults === 1 ? "1 条结果" : `${totalResults} 条结果`} · 按相关度排序
         </span>
-        {isFetching ? <span aria-live="polite" className="normal-case tracking-normal">Updating…</span> : null}
+        {isFetching ? <span aria-live="polite" className="normal-case tracking-normal">更新中…</span> : null}
       </div>
       <div className="flex flex-col pb-10">
         {scope === "all" ? (

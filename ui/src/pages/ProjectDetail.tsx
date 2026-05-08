@@ -428,8 +428,8 @@ export function ProjectDetail() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Projects", href: "/projects" },
-      { label: project?.name ?? routeProjectRef ?? "Project" },
+      { label: "项目", href: "/projects" },
+      { label: project?.name ?? routeProjectRef ?? "项目" },
     ]);
   }, [setBreadcrumbs, project, routeProjectRef]);
 
@@ -651,13 +651,13 @@ export function ProjectDetail() {
           {project.pauseReason === "budget" ? (
             <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-red-200">
               <span className="h-2 w-2 rounded-full bg-red-400" />
-              Paused by budget hard stop
+              因预算硬性限制已暂停
             </div>
           ) : null}
           {project.managedByPlugin ? (
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-[11px] font-medium text-muted-foreground">
               <span className="h-2 w-2 rounded-full" style={{ backgroundColor: project.color ?? "#6366f1" }} />
-              Managed by {project.managedByPlugin.pluginDisplayName}
+              由 {project.managedByPlugin.pluginDisplayName} 管理
             </div>
           ) : null}
         </div>
@@ -697,12 +697,12 @@ export function ProjectDetail() {
       <Tabs value={activeTab ?? "list"} onValueChange={(value) => handleTabChange(value as ProjectTab)}>
         <PageTabBar
           items={[
-            { value: "list", label: "Issues" },
-            { value: "overview", label: "Overview" },
-            ...(project.managedByPlugin ? [{ value: "plugin-operations", label: "Plugin operations" }] : []),
-            ...(showWorkspacesTab ? [{ value: "workspaces", label: "Workspaces" }] : []),
-            { value: "configuration", label: "Configuration" },
-            { value: "budget", label: "Budget" },
+            { value: "list", label: "任务" },
+            { value: "overview", label: "概览" },
+            ...(project.managedByPlugin ? [{ value: "plugin-operations", label: "插件操作" }] : []),
+            ...(showWorkspacesTab ? [{ value: "workspaces", label: "工作区" }] : []),
+            { value: "configuration", label: "配置" },
+            { value: "budget", label: "预算" },
             ...pluginTabItems.map((item) => ({
               value: item.value,
               label: item.label,
@@ -750,7 +750,7 @@ export function ProjectDetail() {
             />
           )
         ) : (
-          <p className="text-sm text-muted-foreground">Loading workspaces...</p>
+          <p className="text-sm text-muted-foreground">正在加载工作区...</p>
         )
       ) : null}
 

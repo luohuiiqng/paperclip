@@ -118,8 +118,8 @@ export function PluginPage() {
       setBreadcrumbs([{ label: resolveRouteSidebarPageTitle(pageSlot, pluginRouteSplat) }]);
       return;
     }
-    setBreadcrumbs([
-      { label: "Plugins", href: "/instance/settings/plugins" },
+      setBreadcrumbs([
+      { label: "插件", href: "/instance/settings/plugins" },
       { label: pageSlot.pluginDisplayName },
     ]);
   }, [pageSlot, pluginRouteSplat, setBreadcrumbs, routeSidebarActive]);
@@ -130,13 +130,13 @@ export function PluginPage() {
     }
     return (
       <div className="space-y-4">
-        <p className="text-sm text-muted-foreground">Select a company to view this page.</p>
+        <p className="text-sm text-muted-foreground">请选择公司后查看此页面。</p>
       </div>
     );
   }
 
   if (!contributions) {
-    return <div className="text-sm text-muted-foreground">Loading…</div>;
+    return <div className="text-sm text-muted-foreground">加载中…</div>;
   }
 
   if (!pluginId && pluginRoutePath) {
@@ -146,7 +146,7 @@ export function PluginPage() {
     if (duplicateMatches.length > 1) {
       return (
         <div className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-          Multiple plugins declare the route <code>{pluginRoutePath}</code>. Use the plugin-id route until the conflict is resolved.
+          多个插件声明了路由 <code>{pluginRoutePath}</code>。在冲突解决前，请使用带 plugin-id 的路由。
         </div>
       );
     }
@@ -168,7 +168,7 @@ export function PluginPage() {
           <Button variant="ghost" size="sm" asChild>
             <Link to={companyPrefix ? `/${companyPrefix}/dashboard` : "/dashboard"}>
               <ArrowLeft className="h-4 w-4 mr-1" />
-              Back
+              返回
             </Link>
           </Button>
         </div>
